@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Haunted Memory</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         START SCREEN
+    ====================================== -->
+
+    <section id="startScreen"
+             class="screen start-screen">
+
+        <div class="content">
+
+            <p class="warning">
+                ⚠ ENTER IF YOU DARE ⚠
+            </p>
+
+            <h1>
+                HAUNTED MEMORY
+            </h1>
+
+            <p class="subtitle">
+                Some memories should never be awakened...
+            </p>
+
+            <button id="startBtn">
+                ENTER THE MANSION
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         GAME SCREEN
+    ====================================== -->
+
+    <section id="gameScreen"
+             class="screen game-screen hidden">
+
+
+        <!-- GAME HEADER -->
+
+        <header class="game-header">
+
+            <div class="game-title">
+                HAUNTED MEMORY
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat">
+                    ❤️ <span id="lives">3</span>
+                </div>
+
+
+                <div class="stat">
+                    🧠 <span id="pairs">0 / 8</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- GAME CONTENT -->
+
+        <main class="game-content">
+
+            <p id="message">
+                Find the haunted pairs... but be careful. 👁️
+            </p>
+
+
+            <div id="gameBoard"
+                 class="game-board">
+            </div>
+
+        </main>
+
+    </section>
+
+
+
+    <!-- =====================================
+         GAME OVER SCREEN
+    ====================================== -->
+
+    <section id="gameOverScreen"
+             class="screen result-screen hidden">
+
+        <div class="result-content">
+
+            <p class="result-icon">
+                ☠️
+            </p>
+
+            <h2>
+                THE MANSION GOT YOU
+            </h2>
+
+            <p>
+                You ran out of lives...
+            </p>
+
+            <button id="restartBtn">
+                TRY AGAIN
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         VICTORY SCREEN
+    ====================================== -->
+
+    <section id="victoryScreen"
+             class="screen result-screen hidden">
+
+        <div class="result-content">
+
+            <p class="result-icon">
+                👁️
+            </p>
+
+            <h2>
+                YOU ESCAPED
+            </h2>
+
+            <p>
+                You found every haunted pair.
+            </p>
+
+            <button id="playAgainBtn">
+                PLAY AGAIN
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         JUMPSCARE
+    ====================================== -->
+
+    <div id="jumpscare"
+         class="jumpscare hidden">
+
+        <div class="jumpscare-face">
+            👁️
+        </div>
+
+        <p>
+            I SAW YOU...
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
