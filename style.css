@@ -1309,3 +1309,55 @@ button:active {
     }
 
 }
+/* ========================================
+   HAUNTED FLICKERING LIGHT
+======================================== */
+
+.game-screen::after {
+
+    animation:
+        fogMoveReverse 12s ease-in-out infinite alternate,
+        hauntedLight 4s ease-in-out infinite;
+
+}
+
+
+@keyframes hauntedLight {
+
+    0% {
+        opacity: 0.20;
+    }
+
+    20% {
+        opacity: 0.45;
+    }
+
+    23% {
+        opacity: 0.15;
+    }
+
+    27% {
+        opacity: 0.50;
+    }
+
+    30% {
+        opacity: 0.22;
+    }
+
+    60% {
+        opacity: 0.38;
+    }
+
+    63% {
+        opacity: 0.12;
+    }
+
+    66% {
+        opacity: 0.45;
+    }
+
+    100% {
+        opacity: 0.25;
+    }
+
+}
