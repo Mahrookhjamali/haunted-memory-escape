@@ -756,7 +756,7 @@ function resetBoard() {
 
 
 // ========================================
-// JUMPSCARE SOUND.👁️
+// JUMPSCARE SOUND 👁️
 // ========================================
 
 function triggerJumpscare() {
