@@ -9,7 +9,6 @@
 // ========================================
 
 const startBtn = document.getElementById("startBtn");
-
 const startScreen = document.getElementById("startScreen");
 const gameScreen = document.getElementById("gameScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
@@ -19,12 +18,9 @@ const restartBtn = document.getElementById("restartBtn");
 const playAgainBtn = document.getElementById("playAgainBtn");
 
 const gameBoard = document.getElementById("gameBoard");
-
 const livesDisplay = document.getElementById("lives");
 const pairsDisplay = document.getElementById("pairs");
-
 const message = document.getElementById("message");
-
 const jumpscare = document.getElementById("jumpscare");
 
 
@@ -63,33 +59,23 @@ let hauntedEventTimer = null;
 let audioContext = null;
 
 
-// ========================================
-// INITIALIZE AUDIO
-// ========================================
-
 function initAudio() {
 
     if (!audioContext) {
-
-        audioContext =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
-
+        audioContext = new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
     }
 
     if (audioContext.state === "suspended") {
-
         audioContext.resume();
-
     }
-
 }
 
 
 // ========================================
-// BASIC TONE
+// BASIC SOUND
 // ========================================
 
 function playTone(
@@ -101,50 +87,39 @@ function playTone(
 
     if (!audioContext) return;
 
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
     oscillator.type = type;
-
 
     oscillator.frequency.setValueAtTime(
         frequency,
         audioContext.currentTime
     );
 
-
     gain.gain.setValueAtTime(
         volume,
         audioContext.currentTime
     );
-
 
     gain.gain.exponentialRampToValueAtTime(
         0.001,
         audioContext.currentTime + duration
     );
 
-
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
-
 
     oscillator.start();
 
     oscillator.stop(
         audioContext.currentTime + duration
     );
-
 }
 
 
 // ========================================
-// BUTTON SOUND
+// BUTTON CLICK SOUND
 // ========================================
 
 function soundClick() {
@@ -155,7 +130,6 @@ function soundClick() {
         "square",
         0.06
     );
-
 }
 
 
@@ -171,7 +145,6 @@ function soundFlip() {
         "triangle",
         0.045
     );
-
 }
 
 
@@ -188,7 +161,6 @@ function soundMatch() {
         0.07
     );
 
-
     setTimeout(() => {
 
         playTone(
@@ -199,12 +171,11 @@ function soundMatch() {
         );
 
     }, 100);
-
 }
 
 
 // ========================================
-// WRONG PAIR SOUND
+// WRONG MATCH SOUND
 // ========================================
 
 function soundWrong() {
@@ -215,69 +186,55 @@ function soundWrong() {
         "sawtooth",
         0.08
     );
-
 }
 
 
 // ========================================
 // JUMPSCARE SOUND 👁️
-/ ========================================
+// ========================================
 
 function soundJumpscare() {
 
     if (!audioContext) return;
 
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
     oscillator.type = "sawtooth";
-
 
     oscillator.frequency.setValueAtTime(
         80,
         audioContext.currentTime
     );
 
-
     oscillator.frequency.exponentialRampToValueAtTime(
         900,
         audioContext.currentTime + 0.25
     );
-
 
     gain.gain.setValueAtTime(
         0.001,
         audioContext.currentTime
     );
 
-
     gain.gain.exponentialRampToValueAtTime(
         0.18,
         audioContext.currentTime + 0.04
     );
-
 
     gain.gain.exponentialRampToValueAtTime(
         0.001,
         audioContext.currentTime + 0.5
     );
 
-
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
-
 
     oscillator.start();
 
     oscillator.stop(
         audioContext.currentTime + 0.5
     );
-
 }
 
 
@@ -294,7 +251,6 @@ function soundGameOver() {
         0.07
     );
 
-
     setTimeout(() => {
 
         playTone(
@@ -305,12 +261,11 @@ function soundGameOver() {
         );
 
     }, 250);
-
 }
 
 
 // ========================================
-// VICTORY SOUND 🏆
+// VICTORY SOUND 👁️
 // ========================================
 
 function soundVictory() {
@@ -321,7 +276,6 @@ function soundVictory() {
         "sine",
         0.06
     );
-
 
     setTimeout(() => {
 
@@ -334,7 +288,6 @@ function soundVictory() {
 
     }, 130);
 
-
     setTimeout(() => {
 
         playTone(
@@ -345,34 +298,26 @@ function soundVictory() {
         );
 
     }, 260);
-
 }
 
 
 // ========================================
-// START GAME — CINEMATIC
+// CINEMATIC START
 // ========================================
 
 function cinematicStart() {
 
-    // Activate audio
     initAudio();
 
-    // Button sound
     soundClick();
 
-
-    // Prevent double click
     startBtn.disabled = true;
 
     startBtn.classList.add("clicked");
 
-
-    // Cinematic exit
     startScreen.classList.add("start-exit");
 
 
-    // Wait for cinematic animation
     setTimeout(() => {
 
         startGame();
@@ -382,7 +327,6 @@ function cinematicStart() {
         startBtn.disabled = false;
 
     }, 1500);
-
 }
 
 
@@ -400,7 +344,6 @@ function startGame() {
 
     jumpscare.classList.add("hidden");
 
-
     gameScreen.classList.remove("hidden");
 
 
@@ -409,7 +352,6 @@ function startGame() {
     matchedPairs = 0;
 
     mistakes = 0;
-
 
     firstCard = null;
 
@@ -422,18 +364,15 @@ function startGame() {
 
     pairsDisplay.textContent = matchedPairs;
 
-
     message.textContent =
         "Find the haunted pairs... but be careful. 👁️";
 
 
     createCards();
 
-
     startHorrorTimer();
 
     startHauntedEvents();
-
 }
 
 
@@ -445,12 +384,10 @@ function createCards() {
 
     gameBoard.innerHTML = "";
 
-
     const cards = [
         ...symbols,
         ...symbols
     ];
-
 
     cards.sort(
         () => Math.random() - 0.5
@@ -459,15 +396,12 @@ function createCards() {
 
     cards.forEach(symbol => {
 
-        const card =
-            document.createElement("div");
-
+        const card = document.createElement("div");
 
         card.classList.add("card");
 
 
         card.innerHTML = `
-
             <div class="card-inner">
 
                 <div class="card-back">
@@ -479,7 +413,6 @@ function createCards() {
                 </div>
 
             </div>
-
         `;
 
 
@@ -492,7 +425,6 @@ function createCards() {
         gameBoard.appendChild(card);
 
     });
-
 }
 
 
@@ -504,22 +436,14 @@ function flipCard() {
 
     if (lockBoard) return;
 
-
     if (this === firstCard) return;
 
-
-    if (this.classList.contains("matched")) {
-        return;
-    }
+    if (this.classList.contains("matched")) return;
 
 
-    // Card sound
     soundFlip();
 
-
-    // Haunted card reaction
     triggerCardReaction(this);
-
 
     this.classList.add("flipped");
 
@@ -529,7 +453,6 @@ function flipCard() {
         firstCard = this;
 
         return;
-
     }
 
 
@@ -537,9 +460,7 @@ function flipCard() {
 
     lockBoard = true;
 
-
     checkMatch();
-
 }
 
 
@@ -563,27 +484,19 @@ function checkMatch() {
             .trim();
 
 
-    // ====================================
     // MATCH
-    // ====================================
-
     if (firstSymbol === secondSymbol) {
 
         firstCard.classList.add("matched");
 
         secondCard.classList.add("matched");
 
-
         matchedPairs++;
 
-
-        // Match sound
         soundMatch();
-
 
         pairsDisplay.textContent =
             matchedPairs;
-
 
         message.textContent =
             "PAIR FOUND... 👁️";
@@ -592,7 +505,6 @@ function checkMatch() {
         resetBoard();
 
 
-        // ALL PAIRS FOUND
         if (matchedPairs === symbols.length) {
 
             stopHorrorTimer();
@@ -604,42 +516,29 @@ function checkMatch() {
 
                 gameScreen.classList.add("hidden");
 
-
-                // Victory sound
                 soundVictory();
-
 
                 victoryScreen.classList.remove(
                     "hidden"
                 );
 
-
             }, 700);
-
         }
 
     }
 
 
-    // ====================================
-    // WRONG PAIR
-    // ====================================
-
+    // WRONG
     else {
 
         lives--;
 
-
-        // Wrong sound
         soundWrong();
-
 
         mistakes++;
 
-
         livesDisplay.textContent =
             lives;
-
 
         message.textContent =
             "IT SAW YOU... 👁️";
@@ -658,7 +557,6 @@ function checkMatch() {
             "horror-flash"
         );
 
-
         message.classList.add(
             "creepy-message"
         );
@@ -674,11 +572,9 @@ function checkMatch() {
                 "wrong-card"
             );
 
-
             gameScreen.classList.remove(
                 "horror-flash"
             );
-
 
             message.classList.remove(
                 "creepy-message"
@@ -714,10 +610,7 @@ function checkMatch() {
                     "hidden"
                 );
 
-
-                // Game over sound
                 soundGameOver();
-
 
                 gameOverScreen.classList.remove(
                     "hidden"
@@ -729,14 +622,11 @@ function checkMatch() {
             resetBoard();
 
             return;
-
         }
 
 
         resetBoard();
-
     }
-
 }
 
 
@@ -751,12 +641,11 @@ function resetBoard() {
     secondCard = null;
 
     lockBoard = false;
-
 }
 
 
 // ========================================
-// JUMPSCARE SOUND 👁️
+// JUMPSCARE 👁️
 // ========================================
 
 function triggerJumpscare() {
@@ -766,9 +655,7 @@ function triggerJumpscare() {
             "hidden"
         )
     ) {
-
         return;
-
     }
 
 
@@ -776,10 +663,7 @@ function triggerJumpscare() {
         "hidden"
     );
 
-
-    // Jumpscare sound
     soundJumpscare();
-
 
     gameScreen.classList.add(
         "screen-shake"
@@ -792,13 +676,11 @@ function triggerJumpscare() {
             "hidden"
         );
 
-
         gameScreen.classList.remove(
             "screen-shake"
         );
 
     }, 1000);
-
 }
 
 
@@ -811,20 +693,17 @@ function startHorrorTimer() {
     stopHorrorTimer();
 
 
-    horrorTimer =
-        setTimeout(() => {
+    horrorTimer = setTimeout(() => {
 
-            triggerJumpscare();
+        triggerJumpscare();
 
-        }, 10000);
-
+    }, 10000);
 }
 
 
 function stopHorrorTimer() {
 
     clearTimeout(horrorTimer);
-
 }
 
 
@@ -837,7 +716,6 @@ function startHauntedEvents() {
     stopHauntedEvents();
 
     scheduleNextHauntedEvent();
-
 }
 
 
@@ -846,7 +724,6 @@ function stopHauntedEvents() {
     clearTimeout(
         hauntedEventTimer
     );
-
 }
 
 
@@ -866,7 +743,6 @@ function scheduleNextHauntedEvent() {
             scheduleNextHauntedEvent();
 
         }, randomDelay);
-
 }
 
 
@@ -881,9 +757,7 @@ function triggerRandomHauntedEvent() {
             "hidden"
         )
     ) {
-
         return;
-
     }
 
 
@@ -896,39 +770,26 @@ function triggerRandomHauntedEvent() {
     switch (eventNumber) {
 
         case 0:
-
             hauntedWhisper();
-
             break;
-
 
         case 1:
-
             hauntedFlash();
-
             break;
-
 
         case 2:
-
             hauntedShake();
-
             break;
-
 
         case 3:
-
             hauntedMessage();
-
             break;
-
     }
-
 }
 
 
 // ========================================
-// EVENT 1 — WHISPER
+// WHISPER
 // ========================================
 
 function hauntedWhisper() {
@@ -946,7 +807,6 @@ function hauntedWhisper() {
     );
 
 
-    // Quiet creepy sound
     playTone(
         90,
         0.5,
@@ -960,18 +820,16 @@ function hauntedWhisper() {
         message.textContent =
             oldMessage;
 
-
         message.classList.remove(
             "creepy-message"
         );
 
     }, 1800);
-
 }
 
 
 // ========================================
-// EVENT 2 — QUICK RED FLASH
+// FLASH
 // ========================================
 
 function hauntedFlash() {
@@ -981,7 +839,6 @@ function hauntedFlash() {
     );
 
 
-    // Short horror sound
     playTone(
         140,
         0.2,
@@ -997,12 +854,11 @@ function hauntedFlash() {
         );
 
     }, 450);
-
 }
 
 
 // ========================================
-// EVENT 3 — SCREEN SHAKE
+// SHAKE
 // ========================================
 
 function hauntedShake() {
@@ -1012,7 +868,6 @@ function hauntedShake() {
     );
 
 
-    // Low rumble
     playTone(
         70,
         0.3,
@@ -1028,12 +883,11 @@ function hauntedShake() {
         );
 
     }, 500);
-
 }
 
 
 // ========================================
-// EVENT 4 — RANDOM CREEPY MESSAGE
+// RANDOM MESSAGE
 // ========================================
 
 function hauntedMessage() {
@@ -1079,7 +933,6 @@ function hauntedMessage() {
     );
 
 
-    // Creepy message sound
     playTone(
         120,
         0.25,
@@ -1093,13 +946,11 @@ function hauntedMessage() {
         message.textContent =
             oldMessage;
 
-
         message.classList.remove(
             "creepy-message"
         );
 
     }, 2000);
-
 }
 
 
@@ -1107,15 +958,12 @@ function hauntedMessage() {
 // BUTTON EVENTS
 // ========================================
 
-
-// FIRST ENTRY
 startBtn.addEventListener(
     "click",
     cinematicStart
 );
 
 
-// RESTART
 restartBtn.addEventListener(
     "click",
     () => {
@@ -1130,7 +978,6 @@ restartBtn.addEventListener(
 );
 
 
-// PLAY AGAIN
 playAgainBtn.addEventListener(
     "click",
     () => {
@@ -1158,12 +1005,10 @@ function triggerCardReaction(card) {
             .trim();
 
 
-    // 👁️ EYE
     if (symbol === "👁️") {
 
         message.textContent =
             "IT'S WATCHING YOU... 👁️";
-
 
         message.classList.add(
             "creepy-message"
@@ -1177,17 +1022,14 @@ function triggerCardReaction(card) {
             );
 
         }, 1200);
-
     }
 
 
-    // 💀 SKULL
     else if (symbol === "💀") {
 
         gameScreen.classList.add(
             "screen-shake"
         );
-
 
         message.textContent =
             "YOU SHOULD NOT HAVE TOUCHED THAT...";
@@ -1200,17 +1042,14 @@ function triggerCardReaction(card) {
             );
 
         }, 550);
-
     }
 
 
-    // 🕷️ SPIDER
     else if (symbol === "🕷️") {
 
         gameScreen.classList.add(
             "horror-flash"
         );
-
 
         message.textContent =
             "SOMETHING CRAWLED PAST YOU...";
@@ -1223,16 +1062,13 @@ function triggerCardReaction(card) {
             );
 
         }, 350);
-
     }
 
 
-    // 🩸 BLOOD
     else if (symbol === "🩸") {
 
         message.textContent =
             "THIS BLOOD IS STILL FRESH...";
-
 
         message.classList.add(
             "creepy-message"
@@ -1246,16 +1082,13 @@ function triggerCardReaction(card) {
             );
 
         }, 1500);
-
     }
 
 
-    // 👻 GHOST
     else if (symbol === "👻") {
 
         message.textContent =
             "DID YOU SEE THAT GHOST?";
-
 
         message.classList.add(
             "creepy-message"
@@ -1269,16 +1102,13 @@ function triggerCardReaction(card) {
             );
 
         }, 1400);
-
     }
 
 
-    // 🔮 CRYSTAL BALL
     else if (symbol === "🔮") {
 
         message.textContent =
             "IT KNOWS WHAT YOU'LL PICK NEXT...";
-
 
         message.classList.add(
             "creepy-message"
@@ -1292,17 +1122,14 @@ function triggerCardReaction(card) {
             );
 
         }, 1600);
-
     }
 
 
-    // 🕯️ CANDLE
     else if (symbol === "🕯️") {
 
         message.textContent =
             "THE FLAME IS FLICKERING...";
 
-
         message.classList.add(
             "creepy-message"
         );
@@ -1315,17 +1142,14 @@ function triggerCardReaction(card) {
             );
 
         }, 1300);
-
     }
 
 
-    // 🌙 MOON
     else if (symbol === "🌙") {
 
         message.textContent =
             "THE NIGHT IS WATCHING...";
 
-
         message.classList.add(
             "creepy-message"
         );
@@ -1338,7 +1162,5 @@ function triggerCardReaction(card) {
             );
 
         }, 1300);
-
     }
-
 }
