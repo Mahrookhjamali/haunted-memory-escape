@@ -1367,3 +1367,270 @@ button:active {
     }
 
 }
+/* ========================================
+   GAME OVER — YOU'RE TRAPPED
+======================================== */
+
+.game-over-screen {
+
+    background:
+        radial-gradient(
+            circle at center,
+            #4a0808 0%,
+            #210505 25%,
+            #090202 60%,
+            #010101 100%
+        );
+
+    animation: trappedBackground 3s ease-in-out infinite;
+
+}
+
+
+/* Dark moving vignette */
+
+.game-over-screen::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 15%,
+            rgba(0, 0, 0, 0.35) 45%,
+            rgba(0, 0, 0, 0.9) 100%
+        );
+
+    animation: trappedVignette 3s ease-in-out infinite;
+
+}
+
+
+/* Red atmosphere */
+
+.game-over-screen::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    background: rgba(130, 0, 0, 0.12);
+
+    filter: blur(100px);
+
+    pointer-events: none;
+
+    animation: trappedGlow 2.5s ease-in-out infinite alternate;
+
+}
+
+
+/* Warning text */
+
+.trap-warning {
+
+    color: #9d0000;
+
+    font-size: 11px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 18px;
+
+    animation: warningFlicker 2s infinite;
+
+}
+
+
+/* Main title */
+
+.game-over-screen h2 {
+
+    color: #eeeeee;
+
+    text-shadow:
+        0 0 10px #900000,
+        0 0 25px #500000,
+        0 0 60px rgba(130, 0, 0, 0.5);
+
+    animation: trappedTitle 1.2s ease;
+
+}
+
+
+/* Description */
+
+.game-over-screen .result-description {
+
+    color: #777777;
+
+    font-style: italic;
+
+}
+
+
+/* Skull */
+
+.game-over-icon {
+
+    filter:
+        drop-shadow(0 0 10px #800000)
+        drop-shadow(0 0 35px #400000);
+
+    animation:
+        trappedSkull 2s ease-in-out infinite;
+
+}
+
+
+/* Background pulse */
+
+@keyframes trappedBackground {
+
+    0%,
+    100% {
+        filter: brightness(0.8);
+    }
+
+    50% {
+        filter: brightness(1.05);
+    }
+
+}
+
+
+/* Vignette */
+
+@keyframes trappedVignette {
+
+    0%,
+    100% {
+        opacity: 0.75;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+}
+
+
+/* Red glow */
+
+@keyframes trappedGlow {
+
+    from {
+        transform: scale(0.8);
+        opacity: 0.3;
+    }
+
+    to {
+        transform: scale(1.25);
+        opacity: 0.75;
+    }
+
+}
+
+
+/* Warning flicker */
+
+@keyframes warningFlicker {
+
+    0%,
+    100% {
+        opacity: 0.45;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    13% {
+        opacity: 0.3;
+    }
+
+    17% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+}
+
+
+/* Title appearance */
+
+@keyframes trappedTitle {
+
+    0% {
+        opacity: 0;
+        transform: scale(0.85);
+        letter-spacing: 12px;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        letter-spacing: clamp(3px, 0.8vw, 7px);
+    }
+
+}
+
+
+/* Skull animation */
+
+@keyframes trappedSkull {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-7px) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    75% {
+        transform: translateY(-5px) rotate(3deg);
+    }
+
+}
+
+
+/* Mobile */
+
+@media (max-width: 650px) {
+
+    .trap-warning {
+
+        font-size: 8px;
+
+        letter-spacing: 3px;
+
+    }
+
+    .game-over-screen .result-description {
+
+        font-size: 13px;
+
+    }
+
+}
