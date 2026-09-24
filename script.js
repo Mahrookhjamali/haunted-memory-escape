@@ -1,28 +1,34 @@
 // ========================================
-// ELEMENTS
+// HAUNTED MEMORY — GAME SCRIPT
 // ========================================
 
-const startButton = document.getElementById("startBtn");
+
+// ========================================
+// DOM ELEMENTS
+// ========================================
+
+const startBtn = document.getElementById("startBtn");
+
 const startScreen = document.getElementById("startScreen");
 const gameScreen = document.getElementById("gameScreen");
-
 const gameOverScreen = document.getElementById("gameOverScreen");
 const victoryScreen = document.getElementById("victoryScreen");
 
-const restartButton = document.getElementById("restartBtn");
-const playAgainButton = document.getElementById("playAgainBtn");
+const restartBtn = document.getElementById("restartBtn");
+const playAgainBtn = document.getElementById("playAgainBtn");
 
 const gameBoard = document.getElementById("gameBoard");
 
 const livesDisplay = document.getElementById("lives");
 const pairsDisplay = document.getElementById("pairs");
+
 const message = document.getElementById("message");
 
 const jumpscare = document.getElementById("jumpscare");
 
 
 // ========================================
-// SYMBOLS
+// GAME DATA
 // ========================================
 
 const symbols = [
@@ -36,11 +42,6 @@ const symbols = [
     "🔮"
 ];
 
-
-// ========================================
-// GAME VARIABLES
-// ========================================
-
 let firstCard = null;
 let secondCard = null;
 
@@ -51,17 +52,7 @@ let matchedPairs = 0;
 let mistakes = 0;
 
 let horrorTimer = null;
-
-
-// ========================================
-// START BUTTON
-// ========================================
-
-startButton.addEventListener("click", function () {
-
-    startGame();
-
-});
+let hauntedEventTimer = null;
 
 
 // ========================================
@@ -71,44 +62,31 @@ startButton.addEventListener("click", function () {
 function startGame() {
 
     startScreen.classList.add("hidden");
-
     gameOverScreen.classList.add("hidden");
-
     victoryScreen.classList.add("hidden");
-
     jumpscare.classList.add("hidden");
 
     gameScreen.classList.remove("hidden");
 
-
     lives = 3;
-
     matchedPairs = 0;
-
     mistakes = 0;
 
     firstCard = null;
-
     secondCard = null;
-
     lockBoard = false;
 
-
     livesDisplay.textContent = lives;
-
-    pairsDisplay.textContent = "0 / 8";
+    pairsDisplay.textContent = matchedPairs;
 
     message.textContent =
         "Find the haunted pairs... but be careful. 👁️";
 
-
     createCards();
-
-
-    // Start jumpscare timer
 
     startHorrorTimer();
 
+    startHauntedEvents();
 }
 
 
@@ -120,31 +98,17 @@ function createCards() {
 
     gameBoard.innerHTML = "";
 
-    let cardSymbols = [];
+    const cards = [...symbols, ...symbols];
 
+    cards.sort(() => Math.random() - 0.5);
 
-    symbols.forEach(function (symbol) {
-
-        cardSymbols.push(symbol);
-        cardSymbols.push(symbol);
-
-    });
-
-
-    shuffle(cardSymbols);
-
-
-    cardSymbols.forEach(function (symbol) {
+    cards.forEach(symbol => {
 
         const card = document.createElement("div");
 
         card.classList.add("card");
 
-        card.dataset.symbol = symbol;
-
-
         card.innerHTML = `
-
             <div class="card-inner">
 
                 <div class="card-back">
@@ -156,41 +120,13 @@ function createCards() {
                 </div>
 
             </div>
-
         `;
 
-
         card.addEventListener("click", flipCard);
-
 
         gameBoard.appendChild(card);
 
     });
-
-}
-
-
-// ========================================
-// SHUFFLE
-// ========================================
-
-function shuffle(array) {
-
-    for (let i = array.length - 1; i > 0; i--) {
-
-        const randomIndex =
-            Math.floor(Math.random() * (i + 1));
-
-
-        [
-            array[i],
-            array[randomIndex]
-        ] = [
-            array[randomIndex],
-            array[i]
-        ];
-
-    }
 
 }
 
@@ -201,25 +137,15 @@ function shuffle(array) {
 
 function flipCard() {
 
-    if (lockBoard) {
-        return;
-    }
+    if (lockBoard) return;
 
+    if (this === firstCard) return;
 
-    if (this === firstCard) {
-        return;
-    }
-
-
-    if (this.classList.contains("matched")) {
-        return;
-    }
-
+    if (this.classList.contains("matched")) return;
 
     this.classList.add("flipped");
 
-
-    if (firstCard === null) {
+    if (!firstCard) {
 
         firstCard = this;
 
@@ -227,11 +153,9 @@ function flipCard() {
 
     }
 
-
     secondCard = this;
 
     lockBoard = true;
-
 
     checkMatch();
 
@@ -244,44 +168,39 @@ function flipCard() {
 
 function checkMatch() {
 
-    const isMatch =
-        firstCard.dataset.symbol ===
-        secondCard.dataset.symbol;
+    const firstSymbol =
+        firstCard.querySelector(".card-front").textContent.trim();
+
+    const secondSymbol =
+        secondCard.querySelector(".card-front").textContent.trim();
 
 
     // ====================================
-    // CORRECT
+    // MATCH
     // ====================================
 
-    if (isMatch) {
+    if (firstSymbol === secondSymbol) {
 
         firstCard.classList.add("matched");
-
         secondCard.classList.add("matched");
-
 
         matchedPairs++;
 
-
-        pairsDisplay.textContent =
-            `${matchedPairs} / 8`;
-
+        pairsDisplay.textContent = matchedPairs;
 
         message.textContent =
             "PAIR FOUND... 👁️";
 
-
         resetBoard();
 
 
-        // VICTORY
-
-        if (matchedPairs === 8) {
+        // ALL PAIRS FOUND
+        if (matchedPairs === symbols.length) {
 
             stopHorrorTimer();
+            stopHauntedEvents();
 
-
-            setTimeout(function () {
+            setTimeout(() => {
 
                 gameScreen.classList.add("hidden");
 
@@ -295,71 +214,61 @@ function checkMatch() {
 
 
     // ====================================
-    // WRONG
+    // WRONG PAIR
     // ====================================
 
-   else {
+    else {
 
-    lives--;
+        lives--;
 
-    mistakes++;
+        mistakes++;
 
-    livesDisplay.textContent = lives;
+        livesDisplay.textContent = lives;
 
-
-    // ====================================
-    // CREEPY WRONG PAIR EFFECT
-    // ====================================
-
-    message.textContent =
-        "IT SAW YOU... 👁️";
-
-    gameScreen.classList.add("horror-flash");
-
-    message.classList.add("creepy-message");
-
-    firstCard.classList.add("wrong-card");
-
-    secondCard.classList.add("wrong-card");
+        message.textContent =
+            "IT SAW YOU... 👁️";
 
 
-    // Remove creepy effects
-
-    setTimeout(function () {
-
-        gameScreen.classList.remove("horror-flash");
-
-        message.classList.remove("creepy-message");
-
-        firstCard.classList.remove("wrong-card");
-
-        secondCard.classList.remove("wrong-card");
-
-    }, 700);
+        firstCard.classList.add("wrong-card");
+        secondCard.classList.add("wrong-card");
 
 
-    // ====================================
-    // CLOSE WRONG CARDS
-    // ====================================
-
-    setTimeout(function () {
-
-        firstCard.classList.remove("flipped");
-
-        secondCard.classList.remove("flipped");
+        gameScreen.classList.add("horror-flash");
+        message.classList.add("creepy-message");
 
 
-        // ====================================
+        setTimeout(() => {
+
+            firstCard.classList.remove("wrong-card");
+            secondCard.classList.remove("wrong-card");
+
+            gameScreen.classList.remove("horror-flash");
+            message.classList.remove("creepy-message");
+
+        }, 700);
+
+
+        setTimeout(() => {
+
+            firstCard.classList.remove("flipped");
+            secondCard.classList.remove("flipped");
+
+        }, 1000);
+
+
         // GAME OVER
-        // ====================================
-
         if (lives === 0) {
 
             stopHorrorTimer();
+            stopHauntedEvents();
 
-            gameScreen.classList.add("hidden");
+            setTimeout(() => {
 
-            gameOverScreen.classList.remove("hidden");
+                gameScreen.classList.add("hidden");
+
+                gameOverScreen.classList.remove("hidden");
+
+            }, 1000);
 
             resetBoard();
 
@@ -370,9 +279,7 @@ function checkMatch() {
 
         resetBoard();
 
-    }, 1000);
-
-}
+    }
 
 }
 
@@ -384,7 +291,6 @@ function checkMatch() {
 function resetBoard() {
 
     firstCard = null;
-
     secondCard = null;
 
     lockBoard = false;
@@ -398,26 +304,16 @@ function resetBoard() {
 
 function triggerJumpscare() {
 
-    // Only during game
-
     if (gameScreen.classList.contains("hidden")) {
         return;
     }
 
-
-    // Show jumpscare
-
     jumpscare.classList.remove("hidden");
-
-
-    // Shake game
 
     gameScreen.classList.add("screen-shake");
 
 
-    // Hide after 1 second
-
-    setTimeout(function () {
+    setTimeout(() => {
 
         jumpscare.classList.add("hidden");
 
@@ -429,18 +325,14 @@ function triggerJumpscare() {
 
 
 // ========================================
-// JUMPSCARE TIMER
+// HORROR TIMER
 // ========================================
 
 function startHorrorTimer() {
 
     stopHorrorTimer();
 
-
-    // TEST VERSION:
-    // Jumpscare after exactly 10 seconds
-
-    horrorTimer = setTimeout(function () {
+    horrorTimer = setTimeout(() => {
 
         triggerJumpscare();
 
@@ -449,17 +341,91 @@ function startHorrorTimer() {
 }
 
 
-// ========================================
-// STOP TIMER
-// ========================================
-
 function stopHorrorTimer() {
 
-    if (horrorTimer !== null) {
+    clearTimeout(horrorTimer);
 
-        clearTimeout(horrorTimer);
+}
 
-        horrorTimer = null;
+
+// ========================================
+// RANDOM HAUNTED EVENTS
+// ========================================
+
+function startHauntedEvents() {
+
+    stopHauntedEvents();
+
+    scheduleNextHauntedEvent();
+
+}
+
+
+function stopHauntedEvents() {
+
+    clearTimeout(hauntedEventTimer);
+
+}
+
+
+function scheduleNextHauntedEvent() {
+
+    const randomDelay =
+        Math.floor(Math.random() * 8000) + 7000;
+
+    hauntedEventTimer = setTimeout(() => {
+
+        triggerRandomHauntedEvent();
+
+        scheduleNextHauntedEvent();
+
+    }, randomDelay);
+
+}
+
+
+// ========================================
+// RANDOM EVENT SELECTOR
+// ========================================
+
+function triggerRandomHauntedEvent() {
+
+    if (gameScreen.classList.contains("hidden")) {
+        return;
+    }
+
+    const eventNumber =
+        Math.floor(Math.random() * 4);
+
+
+    switch (eventNumber) {
+
+        case 0:
+
+            hauntedWhisper();
+
+            break;
+
+
+        case 1:
+
+            hauntedFlash();
+
+            break;
+
+
+        case 2:
+
+            hauntedShake();
+
+            break;
+
+
+        case 3:
+
+            hauntedMessage();
+
+            break;
 
     }
 
@@ -467,22 +433,134 @@ function stopHorrorTimer() {
 
 
 // ========================================
-// TRY AGAIN
+// EVENT 1 — WHISPER
 // ========================================
 
-restartButton.addEventListener("click", function () {
+function hauntedWhisper() {
 
-    startGame();
+    const oldMessage =
+        message.textContent;
 
-});
+    message.textContent =
+        "DON'T LOOK BEHIND YOU...";
+
+    message.classList.add("creepy-message");
+
+
+    setTimeout(() => {
+
+        message.textContent = oldMessage;
+
+        message.classList.remove("creepy-message");
+
+    }, 1800);
+
+}
 
 
 // ========================================
-// PLAY AGAIN
+// EVENT 2 — QUICK RED FLASH
 // ========================================
 
-playAgainButton.addEventListener("click", function () {
+function hauntedFlash() {
 
-    startGame();
+    gameScreen.classList.add("horror-flash");
 
-});
+    setTimeout(() => {
+
+        gameScreen.classList.remove("horror-flash");
+
+    }, 450);
+
+}
+
+
+// ========================================
+// EVENT 3 — SCREEN SHAKE
+// ========================================
+
+function hauntedShake() {
+
+    gameScreen.classList.add("screen-shake");
+
+    setTimeout(() => {
+
+        gameScreen.classList.remove("screen-shake");
+
+    }, 500);
+
+}
+
+
+// ========================================
+// EVENT 4 — RANDOM CREEPY MESSAGE
+// ========================================
+
+function hauntedMessage() {
+
+    const messages = [
+
+        "I'M WATCHING YOU... 👁️",
+
+        "YOU HEARD THAT, RIGHT?",
+
+        "DON'T MAKE A MISTAKE...",
+
+        "SOMETHING IS MOVING...",
+
+        "YOU ARE NOT ALONE...",
+
+        "KEEP LOOKING...",
+
+        "IT KNOWS YOUR MOVE..."
+
+    ];
+
+    const randomMessage =
+        messages[
+            Math.floor(Math.random() * messages.length)
+        ];
+
+
+    const oldMessage =
+        message.textContent;
+
+
+    message.textContent =
+        randomMessage;
+
+    message.classList.add("creepy-message");
+
+
+    setTimeout(() => {
+
+        message.textContent =
+            oldMessage;
+
+        message.classList.remove("creepy-message");
+
+    }, 2000);
+
+}
+
+
+// ========================================
+// BUTTON EVENTS
+// ========================================
+
+startBtn.addEventListener(
+    "click",
+    startGame
+);
+
+
+restartBtn.addEventListener(
+    "click",
+    startGame
+);
+
+
+playAgainBtn.addEventListener(
+    "click",
+    startGame
+);
