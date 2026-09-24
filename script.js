@@ -140,6 +140,7 @@ function flipCard() {
     if (lockBoard) return;
 
     if (this === firstCard) return;
+    triggerCardReaction(this);
 
     if (this.classList.contains("matched")) return;
 
@@ -564,3 +565,149 @@ playAgainBtn.addEventListener(
     "click",
     startGame
 );
+// ========================================
+// SPECIAL HAUNTED CARD REACTIONS
+// ========================================
+
+function triggerCardReaction(card) {
+
+    const symbol =
+        card.querySelector(".card-front").textContent.trim();
+
+
+    // 👁️ EYE
+    if (symbol === "👁️") {
+
+        message.textContent =
+            "IT'S WATCHING YOU... 👁️";
+
+        message.classList.add("creepy-message");
+
+        setTimeout(() => {
+
+            message.classList.remove("creepy-message");
+
+        }, 1200);
+
+    }
+
+
+    // 💀 SKULL
+    else if (symbol === "💀") {
+
+        gameScreen.classList.add("screen-shake");
+
+        message.textContent =
+            "YOU SHOULD NOT HAVE TOUCHED THAT...";
+
+        setTimeout(() => {
+
+            gameScreen.classList.remove("screen-shake");
+
+        }, 550);
+
+    }
+
+
+    // 🕷️ SPIDER
+    else if (symbol === "🕷️") {
+
+        gameScreen.classList.add("horror-flash");
+
+        message.textContent =
+            "SOMETHING CRAWLED PAST YOU...";
+
+        setTimeout(() => {
+
+            gameScreen.classList.remove("horror-flash");
+
+        }, 350);
+
+    }
+
+
+    // 🩸 BLOOD
+    else if (symbol === "🩸") {
+
+        message.textContent =
+            "THIS BLOOD IS STILL FRESH...";
+
+        message.classList.add("creepy-message");
+
+        setTimeout(() => {
+
+            message.classList.remove("creepy-message");
+
+        }, 1500);
+
+    }
+
+
+    // 👻 GHOST
+    else if (symbol === "👻") {
+
+        message.textContent =
+            "DID YOU SEE THAT GHOST?";
+
+        message.classList.add("creepy-message");
+
+        setTimeout(() => {
+
+            message.classList.remove("creepy-message");
+
+        }, 1400);
+
+    }
+
+
+    // 🔮 CRYSTAL BALL
+    else if (symbol === "🔮") {
+
+        message.textContent =
+            "IT KNOWS WHAT YOU'LL PICK NEXT...";
+
+        message.classList.add("creepy-message");
+
+        setTimeout(() => {
+
+            message.classList.remove("creepy-message");
+
+        }, 1600);
+
+    }
+
+
+    // 🕯️ CANDLE
+    else if (symbol === "🕯️") {
+
+        message.textContent =
+            "THE FLAME IS FLICKERING...";
+
+        message.classList.add("creepy-message");
+
+        setTimeout(() => {
+
+            message.classList.remove("creepy-message");
+
+        }, 1300);
+
+    }
+
+
+    // 🌙 MOON
+    else if (symbol === "🌙") {
+
+        message.textContent =
+            "THE NIGHT IS WATCHING...";
+
+        message.classList.add("creepy-message");
+
+        setTimeout(() => {
+
+            message.classList.remove("creepy-message");
+
+        }, 1300);
+
+    }
+
+}
