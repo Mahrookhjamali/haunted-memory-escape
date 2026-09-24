@@ -2824,3 +2824,170 @@ body {
     }
 
 }
+/* ========================================
+   STEP 9 — CINEMATIC CARD ENTRANCE
+======================================== */
+
+.game-board .card {
+    opacity: 0;
+    transform: scale(0.7) translateY(25px);
+    animation: hauntedCardReveal 0.7s ease forwards;
+}
+
+
+/* Cards appear one after another */
+
+.game-board .card:nth-child(1) {
+    animation-delay: 0.08s;
+}
+
+.game-board .card:nth-child(2) {
+    animation-delay: 0.16s;
+}
+
+.game-board .card:nth-child(3) {
+    animation-delay: 0.24s;
+}
+
+.game-board .card:nth-child(4) {
+    animation-delay: 0.32s;
+}
+
+.game-board .card:nth-child(5) {
+    animation-delay: 0.40s;
+}
+
+.game-board .card:nth-child(6) {
+    animation-delay: 0.48s;
+}
+
+.game-board .card:nth-child(7) {
+    animation-delay: 0.56s;
+}
+
+.game-board .card:nth-child(8) {
+    animation-delay: 0.64s;
+}
+
+.game-board .card:nth-child(9) {
+    animation-delay: 0.72s;
+}
+
+.game-board .card:nth-child(10) {
+    animation-delay: 0.80s;
+}
+
+.game-board .card:nth-child(11) {
+    animation-delay: 0.88s;
+}
+
+.game-board .card:nth-child(12) {
+    animation-delay: 0.96s;
+}
+
+.game-board .card:nth-child(13) {
+    animation-delay: 1.04s;
+}
+
+.game-board .card:nth-child(14) {
+    animation-delay: 1.12s;
+}
+
+.game-board .card:nth-child(15) {
+    animation-delay: 1.20s;
+}
+
+.game-board .card:nth-child(16) {
+    animation-delay: 1.28s;
+}
+
+
+@keyframes hauntedCardReveal {
+
+    0% {
+        opacity: 0;
+        transform: scale(0.7) translateY(25px);
+        filter: blur(6px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-3px);
+        filter: blur(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+
+}
+/* ========================================
+   MATCHED CARD EFFECT
+======================================== */
+
+.card.matched {
+    animation: matchedCardGlow 0.8s ease;
+}
+
+
+@keyframes matchedCardGlow {
+
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.12);
+        filter: brightness(1.8);
+    }
+
+    70% {
+        transform: scale(0.96);
+    }
+
+    100% {
+        transform: scale(1);
+        filter: brightness(1.15);
+    }
+
+}
+/* ========================================
+   CINEMATIC GAME MESSAGE
+======================================== */
+
+#message {
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        letter-spacing 0.3s ease;
+}
+
+
+#message.creepy-message {
+    animation: creepyMessagePulse 0.6s ease;
+}
+
+
+@keyframes creepyMessagePulse {
+
+    0% {
+        opacity: 0.4;
+        transform: scale(0.95);
+        letter-spacing: 1px;
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+        letter-spacing: 3px;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        letter-spacing: 1px;
+    }
+
+}
