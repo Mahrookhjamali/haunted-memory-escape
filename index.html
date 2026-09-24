@@ -19,31 +19,97 @@
 
 
     <!-- =====================================
-         START SCREEN
+         CINEMATIC START SCREEN
     ====================================== -->
 
     <section id="startScreen"
              class="screen start-screen">
 
-        <div class="content">
+
+        <!-- DARK ATMOSPHERE -->
+
+        <div class="cinematic-overlay"></div>
+
+
+        <!-- FOG -->
+
+        <div class="fog fog-one"></div>
+        <div class="fog fog-two"></div>
+        <div class="fog fog-three"></div>
+
+
+        <!-- FLOATING PARTICLES -->
+
+        <div class="particles">
+
+            <span>✦</span>
+            <span>•</span>
+            <span>✧</span>
+            <span>•</span>
+            <span>✦</span>
+            <span>·</span>
+            <span>✧</span>
+            <span>•</span>
+            <span>✦</span>
+            <span>·</span>
+
+        </div>
+
+
+        <!-- CANDLE GLOW -->
+
+        <div class="candle-glow"></div>
+
+
+        <!-- START CONTENT -->
+
+        <div class="content cinematic-content">
+
 
             <p class="warning">
                 ⚠ ENTER IF YOU DARE ⚠
             </p>
 
-            <h1>
-                HAUNTED MEMORY
+
+            <h1 class="cinematic-title">
+                HAUNTED
+                <span>MEMORY</span>
             </h1>
+
+
+            <div class="title-line"></div>
+
 
             <p class="subtitle">
                 Some memories should never be awakened...
             </p>
 
-            <button id="startBtn">
-                ENTER THE MANSION
+
+            <p class="story-text">
+                The mansion has been waiting for you.
+            </p>
+
+
+            <button id="startBtn"
+                    class="enter-button">
+
+                <span>ENTER THE MANSION</span>
+
             </button>
 
+
+            <p class="hint">
+                Turn up your volume... if you dare.
+            </p>
+
+
         </div>
+
+
+        <!-- CINEMATIC VIGNETTE -->
+
+        <div class="vignette"></div>
+
 
     </section>
 
@@ -101,75 +167,94 @@
     </section>
 
 
-   <!-- =====================================
-     GAME OVER SCREEN
-====================================== -->
 
-<section id="gameOverScreen"
-         class="screen result-screen game-over-screen hidden">
+    <!-- =====================================
+         GAME OVER SCREEN
+    ====================================== -->
 
-    <div class="result-content">
+    <section id="gameOverScreen"
+             class="screen result-screen game-over-screen hidden">
 
-        <p class="result-icon game-over-icon">
-            ☠️
-        </p>
 
-        <p class="trap-warning">
-            YOU HAVE BEEN CAUGHT
-        </p>
+        <div class="result-content">
 
-        <h2>
-            YOU'RE TRAPPED
-        </h2>
 
-        <p class="result-description">
-            The mansion won't let you leave...
-        </p>
+            <p class="result-icon game-over-icon">
+                ☠️
+            </p>
 
-        <button id="restartBtn">
-            TRY AGAIN
-        </button>
 
-    </div>
+            <p class="trap-warning">
+                YOU HAVE BEEN CAUGHT
+            </p>
 
-</section>
+
+            <h2>
+                YOU'RE TRAPPED
+            </h2>
+
+
+            <p class="result-description">
+                The mansion won't let you leave...
+            </p>
+
+
+            <button id="restartBtn">
+                TRY AGAIN
+            </button>
+
+
+        </div>
+
+    </section>
+
+
 
     <!-- =====================================
          VICTORY SCREEN
     ====================================== -->
 
-   <section id="victoryScreen"
-         class="screen result-screen victory-screen hidden">
+    <section id="victoryScreen"
+             class="screen result-screen victory-screen hidden">
 
-    <div class="result-content">
 
-        <p class="escape-warning">
-            THE DOOR IS OPEN
-        </p>
+        <div class="result-content">
 
-        <p class="result-icon victory-icon">
-            👁️
-        </p>
 
-        <h2>
-            YOU ESCAPED
-        </h2>
+            <p class="escape-warning">
+                THE DOOR IS OPEN
+            </p>
 
-        <p class="result-description">
-            You found every haunted pair...
-        </p>
 
-        <p class="escape-message">
-            But something followed you out.
-        </p>
+            <p class="result-icon victory-icon">
+                👁️
+            </p>
 
-        <button id="playAgainBtn">
-            ENTER AGAIN
-        </button>
 
-    </div>
+            <h2>
+                YOU ESCAPED
+            </h2>
 
-</section>
+
+            <p class="result-description">
+                You found every haunted pair...
+            </p>
+
+
+            <p class="escape-message">
+                But something followed you out.
+            </p>
+
+
+            <button id="playAgainBtn">
+                ENTER AGAIN
+            </button>
+
+
+        </div>
+
+    </section>
+
 
 
     <!-- =====================================
@@ -179,13 +264,16 @@
     <div id="jumpscare"
          class="jumpscare hidden">
 
+
         <div class="jumpscare-face">
             👁️
         </div>
 
+
         <p>
             I SAW YOU...
         </p>
+
 
     </div>
 
