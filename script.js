@@ -298,63 +298,81 @@ function checkMatch() {
     // WRONG
     // ====================================
 
-    else {
+   else {
 
-        lives--;
+    lives--;
 
-        mistakes++;
+    mistakes++;
 
-
-        livesDisplay.textContent = lives;
-
-
-        message.textContent =
-            "Wrong pair... something noticed you. 👁️";
+    livesDisplay.textContent = lives;
 
 
-        gameScreen.classList.add("horror-flash");
+    // ====================================
+    // CREEPY WRONG PAIR EFFECT
+    // ====================================
 
-        message.classList.add("creepy-message");
+    message.textContent =
+        "IT SAW YOU... 👁️";
 
+    gameScreen.classList.add("horror-flash");
 
-        setTimeout(function () {
+    message.classList.add("creepy-message");
 
-            gameScreen.classList.remove("horror-flash");
+    firstCard.classList.add("wrong-card");
 
-            message.classList.remove("creepy-message");
-
-        }, 500);
-
-
-        setTimeout(function () {
-
-            firstCard.classList.remove("flipped");
-
-            secondCard.classList.remove("flipped");
+    secondCard.classList.add("wrong-card");
 
 
-            if (lives === 0) {
+    // Remove creepy effects
 
-                stopHorrorTimer();
+    setTimeout(function () {
+
+        gameScreen.classList.remove("horror-flash");
+
+        message.classList.remove("creepy-message");
+
+        firstCard.classList.remove("wrong-card");
+
+        secondCard.classList.remove("wrong-card");
+
+    }, 700);
 
 
-                gameScreen.classList.add("hidden");
+    // ====================================
+    // CLOSE WRONG CARDS
+    // ====================================
 
-                gameOverScreen.classList.remove("hidden");
+    setTimeout(function () {
+
+        firstCard.classList.remove("flipped");
+
+        secondCard.classList.remove("flipped");
 
 
-                resetBoard();
+        // ====================================
+        // GAME OVER
+        // ====================================
 
-                return;
+        if (lives === 0) {
 
-            }
+            stopHorrorTimer();
 
+            gameScreen.classList.add("hidden");
+
+            gameOverScreen.classList.remove("hidden");
 
             resetBoard();
 
-        }, 1000);
+            return;
 
-    }
+        }
+
+
+        resetBoard();
+
+    }, 1000);
+
+}
 
 }
 
