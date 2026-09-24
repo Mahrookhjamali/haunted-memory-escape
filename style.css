@@ -1634,3 +1634,305 @@ button:active {
     }
 
 }
+/* ========================================
+   VICTORY SCREEN — YOU ESCAPED
+======================================== */
+
+.victory-screen {
+
+    background:
+        radial-gradient(
+            circle at center,
+            #351010 0%,
+            #170707 30%,
+            #050202 65%,
+            #010101 100%
+        );
+
+    animation: victoryBackground 4s ease-in-out infinite;
+
+}
+
+
+/* Soft red atmosphere */
+
+.victory-screen::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(120, 0, 0, 0.18) 0%,
+            transparent 45%
+        );
+
+    animation: victoryAtmosphere 4s ease-in-out infinite;
+
+}
+
+
+/* Door / escape glow */
+
+.victory-screen::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+
+    height: 650px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(220, 40, 40, 0.14),
+            transparent 70%
+        );
+
+    filter: blur(45px);
+
+    pointer-events: none;
+
+    animation: doorGlow 3s ease-in-out infinite alternate;
+
+}
+
+
+/* Top warning */
+
+.escape-warning {
+
+    color: #b51b1b;
+
+    font-size: 11px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 10px;
+
+    animation: escapeWarning 3s ease-in-out infinite;
+
+}
+
+
+/* Eye */
+
+.victory-icon {
+
+    filter:
+        drop-shadow(0 0 10px #9d0000)
+        drop-shadow(0 0 30px #500000);
+
+    animation: victoryEye 3s ease-in-out infinite;
+
+}
+
+
+/* Main title */
+
+.victory-screen h2 {
+
+    color: #eeeeee;
+
+    text-shadow:
+        0 0 10px #a00000,
+        0 0 25px #600000,
+        0 0 55px rgba(150, 0, 0, 0.5);
+
+    animation: victoryTitle 1.3s ease;
+
+}
+
+
+/* Description */
+
+.victory-screen .result-description {
+
+    color: #888888;
+
+    font-style: italic;
+
+}
+
+
+/* Final creepy message */
+
+.escape-message {
+
+    color: #650000;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    margin-top: 8px;
+
+    animation: finalWhisper 4s ease-in-out infinite;
+
+}
+
+
+/* Button */
+
+.victory-screen button {
+
+    margin-top: 24px;
+
+    border-color: #650000;
+
+    box-shadow:
+        0 0 10px rgba(100, 0, 0, 0.3);
+
+}
+
+
+/* ========================================
+   VICTORY ANIMATIONS
+======================================== */
+
+@keyframes victoryBackground {
+
+    0%,
+    100% {
+        filter: brightness(0.85);
+    }
+
+    50% {
+        filter: brightness(1.08);
+    }
+
+}
+
+
+@keyframes victoryAtmosphere {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+
+}
+
+
+@keyframes doorGlow {
+
+    from {
+        transform: scale(0.85);
+        opacity: 0.25;
+    }
+
+    to {
+        transform: scale(1.15);
+        opacity: 0.75;
+    }
+
+}
+
+
+@keyframes escapeWarning {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes victoryEye {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+
+}
+
+
+@keyframes victoryTitle {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(0.8)
+            translateY(20px);
+
+        letter-spacing: 14px;
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            translateY(0);
+
+        letter-spacing:
+            clamp(3px, 0.8vw, 7px);
+
+    }
+
+}
+
+
+@keyframes finalWhisper {
+
+    0%,
+    100% {
+        opacity: 0.25;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 650px) {
+
+    .escape-warning {
+
+        font-size: 8px;
+
+        letter-spacing: 3px;
+
+    }
+
+    .escape-message {
+
+        font-size: 9px;
+
+        letter-spacing: 1px;
+
+    }
+
+}
