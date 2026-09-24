@@ -56,6 +56,36 @@ let hauntedEventTimer = null;
 
 
 // ========================================
+// CINEMATIC START
+// ========================================
+
+function cinematicStart() {
+
+    // Prevent double clicking
+    startBtn.disabled = true;
+
+    startBtn.classList.add("clicked");
+
+    // Start cinematic exit
+    startScreen.classList.add("start-exit");
+
+    // Wait for cinematic animation
+    setTimeout(() => {
+
+        startGame();
+
+        // Make sure the start screen is completely hidden
+        startScreen.classList.add("hidden");
+
+        // Allow button again for future reloads
+        startBtn.disabled = false;
+
+    }, 1500);
+
+}
+
+
+// ========================================
 // START GAME
 // ========================================
 
@@ -140,6 +170,7 @@ function flipCard() {
     if (lockBoard) return;
 
     if (this === firstCard) return;
+
     triggerCardReaction(this);
 
     if (this.classList.contains("matched")) return;
@@ -549,22 +580,27 @@ function hauntedMessage() {
 // BUTTON EVENTS
 // ========================================
 
+// FIRST ENTRY = CINEMATIC
 startBtn.addEventListener(
     "click",
-    startGame
+    cinematicStart
 );
 
 
+// RESTART = DIRECT
 restartBtn.addEventListener(
     "click",
     startGame
 );
 
 
+// PLAY AGAIN = DIRECT
 playAgainBtn.addEventListener(
     "click",
     startGame
 );
+
+
 // ========================================
 // SPECIAL HAUNTED CARD REACTIONS
 // ========================================
